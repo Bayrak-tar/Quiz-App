@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "184663112236",
+    "project_id": "mobil-final-odev-7777c",
+    "storage_bucket": "mobil-final-odev-7777c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184663112236:android:cf64ee87ad889002afef89",
+        "android_client_info": {
+          "package_name": "com.example.mobil_final_odevi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD36lI8Lhz5fZWblzpV9rs0SfP7-TEUvgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
