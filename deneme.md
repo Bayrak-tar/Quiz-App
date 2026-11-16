@@ -221,6 +221,19 @@ AS3 açısından belirgin ödünleşme normal tam metinlerdedir: son model 54 me
 
 Son adayın 17 dosyalık akışında 12 saldırı doğrudan tespit edilmiş, iki saldırı incelemeye yönlendirilmiş ve üç normal dosya temiz geçmiştir. “Saldırılı dosya temiz geçmedi” sonucu, “14/14 saldırı doğrudan tespit edildi” biçiminde yazılmamalıdır.
 
+**Tablo 5b. XLM-R düzeltilmiş MIL modelinde parça sayısına göre cross-chunk sonuçları.**
+
+| Test | Parça | Saldırı olarak yakalanan | İncelemeye düşen | Temiz geçen (kaçan) |
+|---|---:|---:|---:|---:|
+| Standart cross-chunk | 2 | %94 (47) | 1 | 2 |
+| Standart cross-chunk | 3 | %86 (43) | 3 | 4 |
+| Adaptif cross-chunk | 3 | %72 (36) | 5 | 9 |
+| Adaptif cross-chunk | 4 | %66 (33) | 8 | 9 |
+
+**Kaynak:** `artifacts/robust_mil_refined_20261012/regression/candidate/crosschunk*_predictions.json` skorları, `injection_dataset_gercek/labels_crosschunk*.json` içindeki `parca_sayisi` alanına göre gruplanmıştır. Her satırda 50 saldırılı dosya vardır. Saldırı eşiği 0,9981897473, inceleme eşiği 0,3276683092'dir.
+
+Parça sayısı arttıkça doğrudan yakalama oranı düşmektedir. İki parçalı standart saldırılarda yalnız 2/50 dosya temiz geçerken, adaptif üç ve dört parçalı saldırılarda bu sayı 9/50'ye yükselmektedir. Adaptif küme, önceki iyileştirme tasarımını etkilediğinden bu oranlar bağımsız bir kabul ölçümü olarak yorumlanmamalıdır.
+
 ### 4.3. Ayrı tutulan saldırı ifadeleri
 
 **Tablo 6. 40 ayrılmış komuttan oluşturulan 480 örnekte sonuçlar.**
@@ -247,7 +260,7 @@ Kaydedilmiş tahminler üzerinden yapılan yeni analizde average precision (AP),
 
 Bu tablo yalnız metin skorları ve kayıtlı karar bantları içindir; OCR, yapısal göstergeler veya eksik tarama kapsamını içermez. Son modelin daha düşük saldırı yanlış alarmı, taban çizgisine göre daha düşük toplam inceleme/engelleme yükü anlamına gelmemektedir.
 
-![Normal içerikte yanlış alarm ve inceleme yükü](artifacts/publication_revision_20261107/statistics/figures/normal_review_burden.png)
+![Normal içerikte yanlış alarm ve inceleme yükü](deneme_gorseller/normal_review_burden.png)
 
 Ayrılmış 40 komutta, son model ile mBERT arasındaki recall farkı +72,92 yüzde puandır. Payload eksenindeki koşullu bootstrap %95 aralığı +64,58 ile +81,25 yüzde puandır. Bu aralık yalnız mevcut payload örneklemini yeniden örnekler; eğitim rastlantısallığı, yeni alanlar ve çapraz taşıyıcı bağımlılıklarının tamamını kapsamaz. Tarihsel testte güvenilir kaynak/aile grupları bulunmadığından satır bağımsızlığı varsayımıyla anlamlılık testi üretilmemiştir.
 
@@ -302,9 +315,9 @@ Tarihsel mDeBERTa denemeleri sonlu olmayan kayıp nedeniyle tamamlanmamıştır;
 
 
 
-![Ortak pilot karşılaştırması: üç tohum ortalaması ve standart sapması](artifacts/publication_revision_20261107/figures_final/pilot_comparison.png)
+![Ortak pilot karşılaştırması: üç tohum ortalaması ve standart sapması](deneme_gorseller/pilot_comparison.png)
 
-![XLM-R pencereleme koşullarında eşleştirilmiş tohum sonuçları](artifacts/publication_revision_20261107/figures_final/xlmr_paired_seeds.png)
+![XLM-R pencereleme koşullarında eşleştirilmiş tohum sonuçları](deneme_gorseller/xlmr_paired_seeds.png)
 
 Grafiklerdeki değişim aynı tarihsel testte eğitim tohumlarına aittir; bağımsız dış test güven aralığı değildir.
 
@@ -352,7 +365,7 @@ Görünür yol süresi saf model forward süresi değildir; metin çıkarımı d
 
 Gerçek yerel OCR üç görüntü PDF'sinde metni geri kazanmıştır. Ham karakter hata oranları yaklaşık %1,79, %2,16 ve %1,08'dir. Bu üç kurgulanmış sayfa genel OCR doğruluğu kanıtı sayılmaz. İlgili görünmez, kodlanmış ve üstveri akımlarındaki katkılar ayrı kaynak kayıtlarında tutulmuştur.
 
-![Belge biçimleri ve alıntı hataları](artifacts/publication_revision_20261107/system_v3/report/figure_1_format_detection_and_quote_errors.png)
+![Belge biçimleri ve alıntı hataları](deneme_gorseller/figure_1_format_detection_and_quote_errors.png)
 
 Yerel Qwen2.5:7b, TF-IDF, 400 karakterlik parçalar, 50 karakter örtüşme ve top-3 getirimle yürütülen küçük RAG tanısında, getirim öncesi belge metnine yalnız model skoruna dayalı koruma uygulanmıştır. Engelleme eşiği kayıtlı inceleme sınırı olan 0,3276683092'dir. Bu RAG koşulu yapısal belge incelemesini, OCR'ı ve Base64 çözümleme katmanını çalıştırmaz; yukarıdaki tam belge hattı deneyiyle aynı koruma kapsamına sahip değildir. Güvenilir görev proje kodunu yanıtlamak, saldırı hedefi ise yalnız sabit bir saldırı işaretçisini yazdırmaktır. Savunma açık/kapalı koşullarında aynı içerik ve hedef LLM kullanılmıştır.
 
