@@ -334,21 +334,21 @@ Model girdisine NFKC normalizasyonu, tanımlı homoglif eşlemeleri ve görünme
 
 ### 4.4. Belge düzeyinde hard-max çoklu örnek öğrenmesi
 
-Bir $D$ belgesi için pencere kümesi $W(D)=\{w_1,\ldots,w_m\}$ ve pencere skoru $p_i=f_\theta(w_i)$ olsun. Belge skoru Denklem (1) ile tanımlanır:
+Bir $D$ belgesi için pencere kümesi $W(D)=\lbrace w_1,\ldots,w_m\rbrace$ ve pencere skoru $p_i=f_\theta(w_i)$ olsun. Belge skoru Denklem (1) ile tanımlanır:
 
-$$
+```math
 s(D)=\max_{i=1,\ldots,m} p_i \tag{1}
-$$
+```
 
-Eğitimde her belge için mevcut modelle en yüksek skorlu pencere seçilir (Denklem 2) ve kayıp yalnızca bu pencere üzerinden belge etiketi $y\in\{0,1\}$ ile hesaplanır (Denklem 3):
+Eğitimde her belge için mevcut modelle en yüksek skorlu pencere seçilir (Denklem 2) ve kayıp yalnızca bu pencere üzerinden belge etiketi $y\in\lbrace 0,1\rbrace$ ile hesaplanır (Denklem 3):
 
-$$
+```math
 i^{*}=\arg\max_{i} f_\theta(w_i) \tag{2}
-$$
+```
 
-$$
+```math
 \mathcal{L}(D,y)=-\big[y\log p_{i^{*}}+(1-y)\log(1-p_{i^{*}})\big] \tag{3}
-$$
+```
 
 Böylece saldırılı belgenin normal pencereleri pozitif etiketle eğitilmez; normal belgede seçilen pencere ise modelin en çok yanıldığı zor negatif örnektir. Maksimum toplama tek bir güçlü göstergeye duyarlı olduğundan, pencere sayısı arttıkça uzun normal belgelerde yanlış alarm olasılığı da artabilir; bu nedenle uzun belge yanlış alarmları ayrıca raporlanmıştır.
 
@@ -356,9 +356,9 @@ Böylece saldırılı belgenin normal pencereleri pozitif etiketle eğitilmez; n
 
 Model seçimi doğrulama bölümünde, eşik seçimi ayrı kalibrasyon bölümünde yapılmıştır. Önerilen modelin saldırı eşiği $\tau_a=0{,}9981897473$, inceleme eşiği $\tau_r=0{,}3276683092$'dir. Karar kuralı Denklem (4)'te verilmiştir:
 
-$$
+```math
 \text{karar}(D)=\begin{cases}\text{SALDIRI}, & s(D)\ge\tau_a\\ \text{İNCELEME}, & \tau_r\le s(D)<\tau_a\\ \text{TEMİZ}, & s(D)<\tau_r\end{cases} \tag{4}
-$$
+```
 
 Metin çıkarımı başarısız olursa veya tarama tamamlanamazsa karar TARANAMADI olur ve RAG kapısı belgeyi indekse almaz. İncelemeye yönlendirilen saldırı doğrudan tespit sayılmamış, ancak temiz geçen saldırıdan ayrı raporlanmıştır.
 
@@ -400,9 +400,9 @@ Transformer eğitim yapılandırmaları Tablo 9'da verilmiştir. Optimizasyon i�
 
 Pozitif sınıf enjeksiyondur. Kesinlik, duyarlılık, F1 ve FPR Denklem (5)'teki gibi hesaplanmıştır:
 
-$$
+```math
 \text{Kesinlik}=\frac{TP}{TP+FP},\quad \text{Duyarlılık}=\frac{TP}{TP+FN},\quad F_1=\frac{2TP}{2TP+FP+FN},\quad \text{FPR}=\frac{FP}{FP+TN} \tag{5}
-$$
+```
 
 Ortak protokoldeki tüm klasik modeller için eşik, aşama 1 kalibrasyon bölümünde gözlenen FPR %1'i aşmayacak biçimde ve en yüksek duyarlılığı verecek şekilde seçilmiş, ardından tüm test kümelerinde sabit tutulmuştur. Transformer modelleri kendi kayıtlı eşikleriyle değerlendirilmiştir. Eşikten bağımsız sıralama başarısı için ROC-AUC ve ortalama kesinlik (AP) [37, 38]; düşük FPR bölgesi için %0,1, %0,5 ve %1 FPR noktalarında ulaşılabilir TPR raporlanmıştır. Bu son ölçüm test eğrisi üzerinde geriye dönük hesaplanmış olup eşik seçimi için kullanılmamıştır. Ham skor davranışı Brier skoru ve ECE [39] ile betimlenmiştir.
 
