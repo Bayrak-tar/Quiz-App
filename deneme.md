@@ -432,7 +432,7 @@ Tablo 10, tüm model ailelerinin 2.675 metinlik tarihsel test kümesindeki sonu�
 
 *Not:* Klasik modellerde eşik, kalibrasyonda gözlenen %1 FPR hedefiyle seçilmiştir. ROC-AUC değerleri dört basamağa yuvarlanmıştır (SVM 0,99998; XGBoost 0,99995). Deterministik klasik yöntemlerde SS=0 değeri, genel belirsizliğin sıfır olduğunu göstermez.
 
-Önerilen model mBERT'e göre 14 ek saldırı yakalamış ve yanlış alarm sayısını 28'den 8'e düşürmüştür (göreli %71,4 azalma). İlk XLM-R modeli ile önerilen model arasında yuvarlanmış F1 aynıdır; önerilen model iki saldırıyı daha kaçırırken iki yanlış alarmı gidermiştir. Transformer modellerinin eşikten bağımsız ve düşük FPR bölgesindeki başarımı Tablo 11'de, kesinlik–duyarlılık ve düşük FPR bölgesindeki ROC eğrileri sırasıyla Şekil 3 ve Şekil 4'te verilmiştir.
+Önerilen model mBERT'e göre 14 ek saldırı yakalamış ve yanlış alarm sayısını 28'den 8'e düşürmüştür (göreli %71,4 azalma). İlk XLM-R modeli ile önerilen model arasında yuvarlanmış F1 aynıdır; önerilen model iki saldırıyı daha kaçırırken iki yanlış alarmı gidermiştir. Transformer modellerinin eşikten bağımsız ve düşük FPR bölgesindeki başarımı Tablo 11'de, sabit duyarlılık düzeylerindeki kesinlik değerleri ve düşük FPR bölgesindeki ROC eğrileri sırasıyla Şekil 3 ve Şekil 4'te verilmiştir.
 
 **Tablo 11.** Transformer modellerinde eşikten bağımsız ve düşük FPR ölçütleri.
 
@@ -447,13 +447,13 @@ Tablo 10, tüm model ailelerinin 2.675 metinlik tarihsel test kümesindeki sonu�
 
 *Not:* TPR@FPR değerleri test eğrisi üzerinde geriye dönük hesaplanmıştır. Brier ve ECE ham skorları betimlemektedir; skorların kalibre edilmiş risk olasılığı olduğu iddia edilmemektedir.
 
-![Kesinlik–duyarlılık eğrileri](deneme_gorseller/precision_recall.png)
+![Sabit duyarlılık düzeylerinde kesinlik](deneme_gorseller/precision_recall.png)
 
-**Şekil 3.** Tarihsel test kümesinde Transformer modellerinin kesinlik–duyarlılık eğrileri.
+**Şekil 3.** Tarihsel test kümesinde Transformer modellerinin sabit duyarlılık düzeylerindeki kesinlik değerleri. Her düzey için, en az o duyarlılığa ulaşan eşikler arasında elde edilen en yüksek kesinlik (enterpole kesinlik) gösterilmiştir; düzeylerin altındaki sayılar 1.228 saldırılı metin içinde izin verilen en fazla kaçırma sayısıdır. Değerler test eğrisi üzerinde geriye dönük hesaplanmıştır; bu eşikler üretim için benimsenmemiştir. AP: ortalama kesinlik.
 
 ![Düşük FPR bölgesinde ROC eğrileri](deneme_gorseller/low_fpr_roc.png)
 
-**Şekil 4.** Düşük FPR bölgesinde Transformer modellerinin ROC eğrileri.
+**Şekil 4.** Düşük FPR bölgesinde Transformer modellerinin ROC eğrileri. Yatay eksen logaritmiktir; kesikli dikey çizgiler %0,1 ve %1 FPR düzeylerini gösterir. Noktalar önceden dondurulmuş çalışma eşikleridir; eğri üzerindeki eşikler üretim için benimsenmemiştir. 1.447 normal metinle ölçülebilen en küçük sıfırdan büyük FPR 1/1.447 (≈ %0,07) olduğundan eğriler bu değerden başlar.
 
 Tablo 12, Transformer modellerinde hataların uzun metinlerde yoğunlaştığını göstermektedir. mBERT'in FPR değeri 4.000 karakterin üzerindeki metinlerde %6,90'a çıkarken önerilen modelde %0,86'da kalmıştır. Önerilen modelin sekiz yanlış alarmının yedisi 2.000–4.000 karakter aralığındadır.
 
@@ -589,7 +589,7 @@ Tablo 19 ve Şekil 6, inceleme bandı dahil normal içerikte oluşan karar yük�
 
 ![Normal içerikte yanlış alarm ve inceleme yükü](deneme_gorseller/normal_review_burden.png)
 
-**Şekil 6.** Modellere göre normal içerikte yanlış alarm ve inceleme yükü.
+**Şekil 6.** Modellere göre normal içerikte yanlış alarm ve inceleme yükü (tarihsel sentetik test). Yalnızca skor/eşik politikası gösterilmiştir; OCR, yapısal kurallar ve eksik kapsam kararları dahil değildir.
 
 Dengeli test kümesi gerçek kullanımdaki düşük saldırı sıklığını yansıtmamaktadır. Saldırı sıklığı %0,1 olsaydı ve gözlenen duyarlılık ve FPR korunsaydı, Bayes kuralına göre saldırı alarmlarının kesinliği yaklaşık %15,3 olurdu. Ayrıca bağımsız normal belgelerde sıfır hata gözlense dahi gerçek FPR'nin tek taraflı %95 üst sınırını %0,1'in altına indirmek için yaklaşık 2.995 bağımsız belge gerekmektedir ($1-0{,}05^{1/n}$).
 
@@ -621,7 +621,7 @@ Ablasyon koşullarında kısa görünüm eklenmesi XLM-R ortalama F1 değerini 0
 
 ![Ortak pilot karşılaştırması](deneme_gorseller/pilot_comparison.png)
 
-**Şekil 7.** Ortak pilot karşılaştırması: üç tohumun ortalaması ve standart sapması.
+**Şekil 7.** Ortak pilot karşılaştırması: üç tohumun ortalaması ve standart sapması. Tüm modeller aynı 1.024 eğitim kaydıyla eğitilmiş ve tarihsel tanı testinde değerlendirilmiştir. Hata çubukları güven aralığı değil, üç eğitim tohumunun örneklem standart sapmasıdır. \*Devam eğitimi modeli göreve önceden maruz kalmıştır; tek epoch'luk pilotlar mimari üstünlük göstermez.
 
 ### 6.6. Model geliştirme sürecinin değerlendirilmesi
 
@@ -658,9 +658,9 @@ Yayımlanmış İngilizce odaklı DeBERTa-v3 dedektörü, sabit 0,5 eşiğinde t
 
 Sekiz biçimdeki 46 kontrollü dosyada yalnızca görünür metin ve model yolu 21/29 saldırıyı, OCR ve yapısal inceleme dahil tam belge hattı ise 29/29 saldırıyı işaretlemiştir; hiçbir saldırılı dosya temiz geçmemiş ve işlem hatası oluşmamıştır (Şekil 8). Buna karşılık 17 normal kontrolün 8'i, aynı saldırı alıntısını içeren güvenlik eğitimi metninin biçim türevleri olduğu için yanlış işaretlenmiştir. Medyan gecikme görünür yolda 0,0289 s, tam hatta 0,0732 s; 95. yüzdelik gecikme sırasıyla 0,3670 s ve 1,2019 s'dir (model yükleme hariç). OCR, üç görüntü PDF'sinde metni %1,08–%2,16 karakter hata oranıyla geri kazanmıştır.
 
-![Belge biçimlerine göre tespit ve alıntı kaynaklı hatalar](deneme_gorseller/figure_1_format_detection_and_quote_errors.png)
+![Belge biçimlerine göre saldırılı dosyaların tespiti](deneme_gorseller/figure_1_format_detection_and_quote_errors.png)
 
-**Şekil 8.** Belge biçimlerine göre tespit sonuçları ve alıntı kaynaklı yanlış alarmlar.
+**Şekil 8.** Belge biçimlerine göre saldırılı dosyaların tespit sonuçları. Dosyalar aynı saldırı ifadesinin biçim türevleridir; bağımsız genelleme deneyi değildir. Aynı saldırı alıntısını içeren normal kontrol, sekiz biçimin her birinde tam belge hattı tarafından yanlış biçimde saldırı olarak işaretlenmiştir (8/8). \*PPTX: asgari ZIP/XML çıkarıcı örneği; Office uyumluluk testi değildir.
 
 Aynı model üzerinde yalnızca çıkarım normalizasyonu açılıp kapatıldığında (15 kontrollü metin), homoglif, sıfır genişlikli karakter ve birleşik dönüşümlerle gizlenen saldırılar normalizasyon kapalıyken tespit edilememiş, açıkken tespit edilmiştir. Normal saldırı alıntısındaki yanlış alarm her iki koşulda da sürmüştür. Bu ölçüm üç temel metnin türevlerine dayanan bir analizdir; eğitim ablasyonu değildir.
 
@@ -677,7 +677,7 @@ Yerel Qwen2.5-7B [42] modeli, TF-IDF getirimi, 400 karakterlik parçalar, 50 kar
 
 ![Yerel RAG sonuçları](deneme_gorseller/figure_4_local_rag_outcomes.png)
 
-**Şekil 9.** Yerel RAG değerlendirmesinde saldırı ve normal görev sonuçları.
+**Şekil 9.** Yerel RAG değerlendirmesinde saldırı ve normal görev sonuçları: (a) asıl tanılama, (b) skora göre seçilmiş adaylar. Başarılı saldırı, yanıtın tam olarak INJECTION_CONFIRMED olmasıdır. Seçilmiş dört aday Base64 biçimindedir; model eşiğinin altında kalmaları, üretici modelde başarılı saldırı olduklarını göstermez.
 
 Dört komut ailesi için toplam 24 skor sorgusuyla yapılan sınırlı kaçınma denemesinde en düşük skorlu dört aday Base64 kodlamayla dedektör bandının altında kalmış, ancak hiçbiri hedef BDM'de saldırı amacını gerçekleştirmemiştir (koruma açık ve kapalı 0/4). Dolayısıyla dedektörden kaçmak ile başarılı bir uçtan uca saldırı eşdeğer değildir. Bu küçük ölçekli değerlendirme genel bir saldırı engelleme oranı olarak yorumlanmamalıdır.
 
